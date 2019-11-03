@@ -13,26 +13,6 @@ base_url = 'https://www.reddit.com'
 subreddit = 'MachineLearning'
 n_posts = 60
 
-def reddit_data_to_dict(data = '', subreddit_name = ''):
-    '''
-        Takes id='data' as input and outputs a dict with all ids from page input
-    '''
-    first_index = data.index('{')
-    last_index = data.rfind('}') + 1
-    
-    subreddit_name = subreddit_name.lower()
-    
-    json_str = data[first_index:last_index]
-    
-    
-    dict_from_json_str = json.loads(json_str) \
-                                   ['listings'] \
-                                   ['postOrder'] \
-                                   ['ids'] \
-                                   [subreddit_name]
-    
-    return dict_from_json_str
-
 def setup_chrome_browser(path):
     options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications" : 2}
