@@ -11,14 +11,13 @@ from selenium.webdriver.chrome.options import Options
 
 base_url = 'https://www.reddit.com'
 subreddit = 'MachineLearning'
-n_posts = 60
 
-def setup_chrome_browser(path):
+def setup_chrome_browser(path_chromedriver):
     options = webdriver.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications" : 2}
     options.add_experimental_option("prefs", prefs)
     
-    driver = webdriver.Chrome(executable_path = path,
+    driver = webdriver.Chrome(executable_path = path_chromedriver,
                               options=options)
     
     return driver
@@ -26,8 +25,10 @@ def setup_chrome_browser(path):
 browser = setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedriver")
 browser.get(base_url + '/r/' + subreddit)
 
+scroll_n_times = 60
+
 try:
-    while n_posts:
+    while scroll_n_times:
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(0.5)
         n_posts -= 1
