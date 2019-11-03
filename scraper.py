@@ -31,12 +31,14 @@ try:
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(0.5)
         n_posts -= 1
+        
     elements = browser.find_elements_by_xpath("//*[@data-click-id='body']")
     links = [tag.get_attribute('href') for tag in elements]
+    
     print(len(links))
+    
 finally:
-    print('done')
-    #browser.quit()
+    browser.quit()
 
 
 
