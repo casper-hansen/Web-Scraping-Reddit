@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-
-base_url = 'https://www.reddit.com'
+reddit_home = 'https://www.reddit.com'
+slash = '/r/'
 subreddit = 'MachineLearning'
 
 def setup_chrome_browser(path_chromedriver):
@@ -23,7 +23,7 @@ def setup_chrome_browser(path_chromedriver):
     return driver
 
 browser = setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedriver")
-browser.get(base_url + '/r/' + subreddit)
+browser.get(reddit_home + slash + subreddit)
 
 scroll_n_times = 60
 
@@ -31,7 +31,7 @@ try:
     while scroll_n_times:
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(0.5)
-        n_posts -= 1
+        scroll_n_times -= 1
         
     elements = browser.find_elements_by_xpath("//*[@data-click-id='body']")
     links = [tag.get_attribute('href') for tag in elements]
@@ -40,10 +40,3 @@ try:
     
 finally:
     browser.quit()
-
-
-
-#soup = BeautifulSoup(page.text, features='html.parser')
-#data_str = soup.find(id='data').text
-
-#data = reddit_data_to_dict(data_str, subreddit)
