@@ -15,13 +15,16 @@ SelScraper.setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedri
 xpath = "//a[@data-click-id='body']"
 scroll_n_times = 5
 
+# Collect links from subreddit
 links = SelScraper.collect_links(page = reddit_home + slash + subreddit,
-                         scroll_n_times = scroll_n_times,
-                         xpath = xpath)
+                                 scroll_n_times = scroll_n_times,
+                                 xpath = xpath)
 
+# Find the <script> with id='data' for each link
 script_data = BSoupScraper.get_scripts_from_urls(links)
 
-data = SelScraper.reddit_data_to_dict(script_data, subreddit)
+# Transforms each script with data into a Python dict, returned as [{}, {}...]
+data = SelScraper.reddit_data_to_dict(script_data)
 
 # Upvote ratio
 #json.loads(json_str)['posts']['models']['t3_dkox1s']['upvoteRatio']

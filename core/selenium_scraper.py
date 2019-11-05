@@ -69,8 +69,7 @@ class SeleniumScraper():
 
     
     def reddit_data_to_dict(self,
-                            script_data = [], 
-                            subreddit_name = ''):
+                            script_data = []):
         '''
             Takes id='data' as input and outputs a dict with all ids from page input
         '''
@@ -79,8 +78,6 @@ class SeleniumScraper():
         for data in script_data:
             first_index = data.index('{')
             last_index = data.rfind('}') + 1
-            
-            subreddit_name = subreddit_name.lower()
             
             json_str = data[first_index:last_index]
             
