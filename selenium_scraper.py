@@ -1,7 +1,5 @@
 import time
-import requests
 import json
-from bs4 import BeautifulSoup
 from selenium import webdriver
 
 class SeleniumScraper():
@@ -68,23 +66,7 @@ class SeleniumScraper():
             self.driver.quit()
         
         return self.links
-    
-    def soup_data_helper(self,
-                         urls):
-        '''
-            Finds the script with id of data
-        '''
-        pure_script_data = []
-        
-        for url in urls:
-            headers = {'User-Agent': 'Mozilla/5.0'}
-            r = requests.get(url, headers=headers)
-            
-            soup = BeautifulSoup(r.text, 'html.parser')
-            
-            pure_script_data.append(soup.find(id='data').text)
-        
-        return pure_script_data
+
     
     def reddit_data_to_dict(self,
                             script_data = [], 
