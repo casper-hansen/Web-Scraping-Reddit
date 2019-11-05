@@ -1,5 +1,5 @@
-from selenium_scraper import SeleniumScraper
-from soup_scraper import SoupScraper
+from core.selenium_scraper import SeleniumScraper
+from core.soup_scraper import SoupScraper
 
 reddit_home = 'https://www.reddit.com'
 slash = '/r/'
