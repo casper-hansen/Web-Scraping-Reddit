@@ -1,4 +1,6 @@
 import time
+import requests
+import json
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -9,6 +11,7 @@ subreddit = 'MachineLearning'
 class SeleniumScraper():
     def __init__(self):
         self.driver = None
+        self.page = ''
         self.links = []
     
     def setup_chrome_browser(self,
@@ -49,6 +52,7 @@ class SeleniumScraper():
                 links : array
                     An array of links to the URLs scraped.
         '''
+        self.page = page
         self.driver.get(page)
         
         try:
@@ -68,6 +72,43 @@ class SeleniumScraper():
             self.driver.quit()
         
         return self.links
+    
+    def soup_data_helper(self,
+                         urls):
+        '''
+            Finds the script with id of data
+        '''
+        pure_script_data = []
+        
+        for url in urls:
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            r = requests.get(url, headers=headers)
+            
+            soup = BeautifulSoup(r.text, 'html.parser')
+            
+            pure_script_data.append(soup.find(id='data').text)
+        
+        return pure_script_data
+    
+    def reddit_data_to_dict(self,
+                            script_data = [], 
+                            subreddit_name = ''):
+        '''
+            Takes id='data' as input and outputs a dict with all ids from page input
+        '''
+        pure_dicts = []
+        
+        for data in script_data:
+            first_index = data.index('{')
+            last_index = data.rfind('}') + 1
+            
+            subreddit_name = subreddit_name.lower()
+            
+            json_str = data[first_index:last_index]
+            
+            pure_dicts.append(json.loads(json_str))
+        
+        return pure_dicts
 
 SS = SeleniumScraper()
 SS.setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedriver")
@@ -80,4 +121,14 @@ links = SS.collect_links(page = reddit_home + slash + subreddit,
                          scroll_n_times = scroll_n_times,
                          xpath = xpath)
 
-print(len(links))
+script_data = SS.soup_data_helper(links)
+
+data = SS.reddit_data_to_dict(script_data, subreddit)
+
+# Upvote ratio
+#json.loads(json_str)['posts']['models']['t3_dkox1s']['upvoteRatio']
+
+# All comment ids
+# commentsPage -> keyToChatCommentLinks -> commentsPage--[post:'t3_dkox1s']
+
+print(data)
