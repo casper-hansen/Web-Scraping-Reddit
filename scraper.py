@@ -6,7 +6,9 @@ slash = '/r/'
 subreddit = 'MachineLearning'
 
 SelScraper = SeleniumScraper()
-BSoupScraper = SoupScraper()
+BSoupScraper = SoupScraper(reddit_home,
+                           slash,
+                           subreddit)
 
 SelScraper.setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedriver")
 
@@ -24,10 +26,10 @@ links = SelScraper.collect_links(page = reddit_home + slash + subreddit,
 script_data = BSoupScraper.get_scripts(urls = links)
 
 # Transforms each script with data into a Python dict, returned as [{}, {}...]
-data = SelScraper.reddit_data_to_dict(script_data = script_data)
+BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
-# Upvote ratio
-#json.loads(json_str)['posts']['models']['t3_dkox1s']['upvoteRatio']
+# Get the url_id ---------------v    and url title ------------v
+# /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
+BSoupScraper.get_post_ids_and_url_titles()
 
-# All comment ids
-# commentsPage -> keyToChatCommentLinks -> commentsPage--[post:'t3_dkox1s'] -> id
+BSoupScraper.get_titles()
