@@ -60,7 +60,11 @@ class SoupScraper():
         
         for i, data in enumerate(self.data):
             place = self.slash + self.subreddit + '/comments/' + self.url_ids[i] + '/' + self.url_titles[i] + '/'
-            titles.append(data['platform']['metas'][place]['title'])
+            title_with_sub_name = data['platform']['metas'][place]['title']
+            
+            title = title_with_sub_name[0:title_with_sub_name.rfind(':') - 1]
+            
+            titles.append(title)
         
         self.titles = titles
     
