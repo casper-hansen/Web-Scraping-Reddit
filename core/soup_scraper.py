@@ -11,6 +11,9 @@ class SoupScraper():
         self.slash = slash
         self.subreddit = subreddit
         
+        self.single_post_data = {}
+        self.index = 0
+        
         self.pure_script_data = []
         self.urls = []
         self.data = []
@@ -19,7 +22,6 @@ class SoupScraper():
         self.titles = []
         self.upvote_ratios = []
         self.scores = []
-        self.votes = []
         self.milli_seconds_time_of_post = []
         self.authors = []
     
@@ -46,13 +48,18 @@ class SoupScraper():
         
     
     def get_post_id_and_url_title(self,
-                                  single_link):
+                                  single_link,
+                                  current_data,
+                                  index):
         '''
             Gets id and title from URL
             
                                        /--id--/--------------------URL title--------------------/
             /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
         '''
+        
+        self.single_post_data = current_data
+        self.index = index
         
         first_index = single_link.index('comments/') + 9
         last_index = first_index + 6
@@ -65,39 +72,32 @@ class SoupScraper():
         self.url_ids.append(url_id)
         self.url_titles.append(url_title)
     
-    def get_title(self,
-                  single_post_data,
-                  index):
+    def get_title(self):
         '''
             Gets the title of the post
         '''
-        title = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['title']
+        
+        title = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['title']
         self.titles.append(title)
         
-    def get_upvote_ratio(self,
-                         single_post_data,
-                         index):
+    def get_upvote_ratio(self):
         '''
             Gets the upvote ratio of the post
         '''
         
-        ratio = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['upvoteRatio']
+        ratio = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['upvoteRatio']
         self.upvote_ratios.append(ratio)
     
-    def get_score(self,
-                  single_post_data,
-                  index):
+    def get_score(self):
         '''
             Gets the score of the post
         '''
         
-        score = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['score']
+        score = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['score']
         self.scores.append(score)
     
-    def get_posted_time(self,
-                        single_post_data,
-                        index):
-        time = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['created']
+    def get_posted_time(self):
+        time = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['created']
         self.milli_seconds_time_of_post.append(time)
     
     def get_flairs(self):
@@ -114,13 +114,11 @@ class SoupScraper():
         # ['posts']['models']['t3_id']['goldCount']
         return None
     
-    def get_author(self,
-                   single_post_data,
-                   index):
+    def get_author(self):
         '''
             Get the author of the post
         '''
-        author = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['author']
+        author = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['author']
         self.authors.append(author)
     
     def get_main_link(self):

@@ -32,9 +32,10 @@ script_data = BSoupScraper.get_scripts(urls = links)
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
 for i, current_data in enumerate(BSoupScraper.data):
-    BSoupScraper.get_post_id_and_url_title(BSoupScraper.urls[i])
-    BSoupScraper.get_title(current_data, i)
-    BSoupScraper.get_upvote_ratio(current_data, i)
-    BSoupScraper.get_score(current_data, i)
-    BSoupScraper.get_posted_time(current_data, i)
-    BSoupScraper.get_author(current_data, i)
+    BSoupScraper.get_post_id_and_url_title(BSoupScraper.urls[i],
+                                           current_data, i)
+    BSoupScraper.get_title()
+    BSoupScraper.get_upvote_ratio()
+    BSoupScraper.get_score()
+    BSoupScraper.get_posted_time()
+    BSoupScraper.get_author()
