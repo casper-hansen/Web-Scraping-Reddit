@@ -152,6 +152,12 @@ class SoupScraper():
         total_num_comments = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['numComments']
         self.total_num_comments.append(total_num_comments)
     
+    def get_main_link(self):
+        return None
+    
+    def get_links_from_post(self):
+        return None
+    
     def get_comment_ids(self):
         '''
             Gets all comment ids for each post.
@@ -159,10 +165,4 @@ class SoupScraper():
             https://www.reddit.com/r/MachineLearning/comments/dtfx9m/rtheoretical_research_paper_in_gans/f6wbrvh
         '''
         
-        return None
-        
-    def get_main_link(self):
-        return None
-    
-    def get_links_from_post(self):
         return None
