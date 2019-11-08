@@ -17,6 +17,7 @@ class SoupScraper():
         self.url_ids = []
         self.url_titles = []
         self.titles = []
+        self.upvote_ratios = []
     
     def get_scripts(self,
                     urls = []):
@@ -38,54 +39,72 @@ class SoupScraper():
         self.pure_script_data = pure_script_data
         
         return pure_script_data
+        
     
-    def get_post_ids_and_url_titles(self):
-        url_ids = []
-        url_titles = []
-        
-        for link in self.urls:
-            first_index = link.index('comments/') + 9
-            last_index = first_index + 6
-            url_ids.append(link[first_index:last_index])
+    def get_post_id_and_url_title(self,
+                                  single_link):
+        '''
+            Gets id and title from URL
             
-            first_index = last_index + 1
-            last_index = link.rfind('/')
-            url_titles.append(link[first_index:last_index])
+            # Get the url_id ---------------v    and url title ------------v
+            # /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
+        '''
         
-        self.url_ids = url_ids
-        self.url_titles = url_titles
+        first_index = single_link.index('comments/') + 9
+        last_index = first_index + 6
+        url_id = single_link[first_index:last_index]
+        
+        first_index = last_index + 1
+        last_index = single_link.rfind('/')
+        url_title = single_link[first_index:last_index]
+        
+        self.url_ids.append(url_id)
+        self.url_titles.append(url_title)
     
-    def get_titles(self):
-        titles = []
+    def get_title(self,
+                  single_post_data,
+                  index):
+        '''
+            Gets the title of the post
+        '''
         
-        for i, data in enumerate(self.data):
-            place = self.slash + self.subreddit + '/comments/' + self.url_ids[i] + '/' + self.url_titles[i] + '/'
-            title_with_sub_name = data['platform']['metas'][place]['title']
-            
-            title = title_with_sub_name[0:title_with_sub_name.rfind(':') - 1]
-            
-            titles.append(title)
+        place = self.slash +             \
+                self.subreddit +         \
+                '/comments/' +           \
+                self.url_ids[index] +    \
+                '/' +                    \
+                self.url_titles[index] + \
+                '/'
         
-        self.titles = titles
+        title_with_sub_name = single_post_data['platform']['metas'][place]['title']
+        
+        title = title_with_sub_name[0:title_with_sub_name.rfind(':') - 1]
+        
+        self.titles.append(title)
+        
+    def get_upvote_ratio(self,
+                          single_post_data,
+                          index):
+        '''
+            Gets the upvote ratio of the post
+        '''
+        
+        ratio = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['upvoteRatio']
+        self.upvote_ratios.append(ratio)
     
     def get_votes(self):
         return None
     
-    def get_upvote_ratio(self):
-        # Upvote ratio
-        #json.loads(json_str)['posts']['models']['t3_dkox1s']['upvoteRatio']
+    def get_post_times(self):
         return None
     
-    def get_post_time(self):
+    def get_flairs(self):
         return None
     
-    def get_flair(self):
+    def get_users(self):
         return None
     
-    def get_user(self):
-        return None
-    
-    def get_main_link(self):
+    def get_main_links(self):
         return None
     
     def get_all_links(self):

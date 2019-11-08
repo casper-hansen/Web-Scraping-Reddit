@@ -22,14 +22,15 @@ links = SelScraper.collect_links(page = reddit_home + slash + subreddit,
                                  scroll_n_times = scroll_n_times,
                                  xpath = xpath)
 
+print(('Caught {0} links').format(len(links)))
+
 # Find the <script> with id='data' for each link
 script_data = BSoupScraper.get_scripts(urls = links)
 
 # Transforms each script with data into a Python dict, returned as [{}, {}...]
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
-# Get the url_id ---------------v    and url title ------------v
-# /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
-BSoupScraper.get_post_ids_and_url_titles()
-
-BSoupScraper.get_titles()
+for i, current_data in enumerate(BSoupScraper.data):
+    BSoupScraper.get_post_id_and_url_title(BSoupScraper.urls[i])
+    BSoupScraper.get_title(current_data, i)
+    BSoupScraper.get_upvote_ratio(current_data, i)
