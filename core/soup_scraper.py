@@ -20,7 +20,8 @@ class SoupScraper():
         self.upvote_ratios = []
         self.scores = []
         self.votes = []
-        self.time_of_posts = []
+        self.milli_seconds_time_of_post = []
+        self.authors = []
     
     def get_scripts(self,
                     urls = []):
@@ -70,19 +71,7 @@ class SoupScraper():
         '''
             Gets the title of the post
         '''
-        
-        place = self.slash +             \
-                self.subreddit +         \
-                '/comments/' +           \
-                self.url_ids[index] +    \
-                '/' +                    \
-                self.url_titles[index] + \
-                '/'
-        
-        title_with_sub_name = single_post_data['platform']['metas'][place]['title']
-        
-        title = title_with_sub_name[0:title_with_sub_name.rfind(':') - 1]
-        
+        title = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['title']
         self.titles.append(title)
         
     def get_upvote_ratio(self,
@@ -109,19 +98,35 @@ class SoupScraper():
                         single_post_data,
                         index):
         time = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['created']
-        self.time_of_posts.append(time)
+        self.milli_seconds_time_of_post.append(time)
     
     def get_flairs(self):
+        '''
+            Get the flair of the post
+        '''
+         # ['posts']['models']['t3_id']['flair']['text']
         return None
     
-    def get_users(self):
-        # ['posts']['models']['t3_id']['author']
+    def get_num_gold(self):
+        '''
+            Get the number of golds for post
+        '''
+        # ['posts']['models']['t3_id']['goldCount']
         return None
     
-    def get_main_links(self):
+    def get_author(self,
+                   single_post_data,
+                   index):
+        '''
+            Get the author of the post
+        '''
+        author = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['author']
+        self.authors.append(author)
+    
+    def get_main_link(self):
         return None
     
-    def get_all_links(self):
+    def get_links_from_post(self):
         return None
     
     def get_total_num_comments(self):

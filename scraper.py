@@ -37,3 +37,4 @@ for i, current_data in enumerate(BSoupScraper.data):
     BSoupScraper.get_upvote_ratio(current_data, i)
     BSoupScraper.get_score(current_data, i)
     BSoupScraper.get_posted_time(current_data, i)
+    BSoupScraper.get_author(current_data, i)
