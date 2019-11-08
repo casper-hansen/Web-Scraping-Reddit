@@ -18,6 +18,8 @@ class SoupScraper():
         self.url_titles = []
         self.titles = []
         self.upvote_ratios = []
+        self.scores = []
+        self.votes = []
     
     def get_scripts(self,
                     urls = []):
@@ -99,18 +101,8 @@ class SoupScraper():
             Gets the score of the post
         '''
         
-        return None
-    
-    def get_total_voters(self,
-                         single_post_data,
-                         index):
-        '''
-            Gets the total number of voters in a post
-            (score / upvote ratio) * 100
-        '''
-        
-    
-        return None
+        score = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['score']
+        self.scores.append(score)
     
     def get_post_times(self):
         return None

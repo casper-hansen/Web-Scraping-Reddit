@@ -4,7 +4,7 @@ from core.soup_scraper import SoupScraper
 reddit_home = 'https://www.reddit.com'
 slash = '/r/'
 subreddit = 'MachineLearning'
-sort_by = '/new/'
+sort_by = '/hot/'
 
 SelScraper = SeleniumScraper()
 BSoupScraper = SoupScraper(reddit_home,
@@ -35,3 +35,4 @@ for i, current_data in enumerate(BSoupScraper.data):
     BSoupScraper.get_post_id_and_url_title(BSoupScraper.urls[i])
     BSoupScraper.get_title(current_data, i)
     BSoupScraper.get_upvote_ratio(current_data, i)
+    BSoupScraper.get_score(current_data, i)
