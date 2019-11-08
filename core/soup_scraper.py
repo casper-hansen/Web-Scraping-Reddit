@@ -83,8 +83,8 @@ class SoupScraper():
         self.titles.append(title)
         
     def get_upvote_ratio(self,
-                          single_post_data,
-                          index):
+                         single_post_data,
+                         index):
         '''
             Gets the upvote ratio of the post
         '''
@@ -92,7 +92,24 @@ class SoupScraper():
         ratio = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['upvoteRatio']
         self.upvote_ratios.append(ratio)
     
-    def get_votes(self):
+    def get_score(self,
+                  single_post_data,
+                  index):
+        '''
+            Gets the score of the post
+        '''
+        
+        return None
+    
+    def get_total_voters(self,
+                         single_post_data,
+                         index):
+        '''
+            Gets the total number of voters in a post
+            (score / upvote ratio) * 100
+        '''
+        
+    
         return None
     
     def get_post_times(self):
