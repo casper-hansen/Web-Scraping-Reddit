@@ -20,6 +20,7 @@ class SoupScraper():
         self.upvote_ratios = []
         self.scores = []
         self.votes = []
+        self.time_of_posts = []
     
     def get_scripts(self,
                     urls = []):
@@ -48,8 +49,8 @@ class SoupScraper():
         '''
             Gets id and title from URL
             
-            # Get the url_id ---------------v    and url title ------------v
-            # /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
+                                       /--id--/--------------------URL title--------------------/
+            /r/MachineLearning/comments/dkox1s/d_machine_learning_wayr_what_are_you_reading_week/
         '''
         
         first_index = single_link.index('comments/') + 9
@@ -104,13 +105,17 @@ class SoupScraper():
         score = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['score']
         self.scores.append(score)
     
-    def get_post_times(self):
-        return None
+    def get_posted_time(self,
+                        single_post_data,
+                        index):
+        time = single_post_data['posts']['models']['t3_' + self.url_ids[index]]['created']
+        self.time_of_posts.append(time)
     
     def get_flairs(self):
         return None
     
     def get_users(self):
+        # ['posts']['models']['t3_id']['author']
         return None
     
     def get_main_links(self):
@@ -119,7 +124,15 @@ class SoupScraper():
     def get_all_links(self):
         return None
     
+    def get_total_num_comments(self):
+        # ['posts']['models']['t3_id']['numComments']
+        return None
+    
     def get_comment_ids(self):
         # All comment ids
         # commentsPage -> keyToChatCommentLinks -> commentsPage--[post:'t3_dkox1s'] -> id
+        return None
+    
+    def get_category(self):
+        # ['posts']['models']['t3_id']['postCategories']['categoryName']
         return None
