@@ -52,10 +52,10 @@ class SoupScraper():
         return pure_script_data
         
     
-    def get_post_id_and_url_title(self,
-                                  single_link,
-                                  current_data,
-                                  index):
+    def get_url_id_and_url_title(self,
+                                 single_link,
+                                 current_data,
+                                 index):
         '''
             Gets id and title from URL
             
