@@ -24,12 +24,17 @@ class SoupScraper():
         self.scores = []
         self.milli_seconds_time_of_post = []
         self.authors = []
+        self.flairs = []
+        self.gold_counts = []
+        self.categories = []
+        self.total_num_comments = []
     
     def get_scripts(self,
                     urls = []):
         '''
             Finds the script with id of data
         '''
+        
         self.urls = urls
         
         pure_script_data = []
@@ -104,38 +109,60 @@ class SoupScraper():
         '''
             Get the flair of the post
         '''
-         # ['posts']['models']['t3_id']['flair']['text']
-        return None
+        
+        flairs = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['flair']
+        
+        flair_arr = []
+        
+        for flair in flairs:
+            flair_arr.append(flair['text'])
+        
+        self.flairs.append(flair_arr)
     
     def get_num_gold(self):
         '''
             Get the number of golds for post
         '''
-        # ['posts']['models']['t3_id']['goldCount']
-        return None
+        
+        gold = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['goldCount']
+        self.gold_counts.append(gold)
     
     def get_author(self):
         '''
             Get the author of the post
         '''
+        
         author = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['author']
         self.authors.append(author)
     
+    def get_category(self):
+        '''
+            Gets the category of the subreddit
+        '''
+        categories = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['postCategories']
+        
+        cat_arr = []
+        
+        for cat in categories:
+            cat_arr.append(cat['categoryName'])
+        
+        self.categories.append(cat_arr)
+    
+    def get_total_num_comments(self):
+        total_num_comments = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['numComments']
+        self.total_num_comments.append(total_num_comments)
+    
+    def get_comment_ids(self):
+        '''
+            Gets all comment ids for each post.
+                                                                                                        /comment id
+            https://www.reddit.com/r/MachineLearning/comments/dtfx9m/rtheoretical_research_paper_in_gans/f6wbrvh
+        '''
+        
+        return None
+        
     def get_main_link(self):
         return None
     
     def get_links_from_post(self):
-        return None
-    
-    def get_total_num_comments(self):
-        # ['posts']['models']['t3_id']['numComments']
-        return None
-    
-    def get_comment_ids(self):
-        # All comment ids
-        # commentsPage -> keyToChatCommentLinks -> commentsPage--[post:'t3_dkox1s'] -> id
-        return None
-    
-    def get_category(self):
-        # ['posts']['models']['t3_id']['postCategories']['categoryName']
         return None

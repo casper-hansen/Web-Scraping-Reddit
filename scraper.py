@@ -39,3 +39,8 @@ for i, current_data in enumerate(BSoupScraper.data):
     BSoupScraper.get_score()
     BSoupScraper.get_posted_time()
     BSoupScraper.get_author()
+    BSoupScraper.get_flairs()
+    BSoupScraper.get_num_gold()
+    BSoupScraper.get_category()
+    BSoupScraper.get_total_num_comments()
+    BSoupScraper.get_comment_ids()
