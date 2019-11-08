@@ -4,6 +4,7 @@ from core.soup_scraper import SoupScraper
 reddit_home = 'https://www.reddit.com'
 slash = '/r/'
 subreddit = 'MachineLearning'
+sort_by = '/new/'
 
 SelScraper = SeleniumScraper()
 BSoupScraper = SoupScraper(reddit_home,
@@ -18,7 +19,7 @@ xpath = "//a[@data-click-id='body']"
 scroll_n_times = 5
 
 # Collect links from subreddit
-links = SelScraper.collect_links(page = reddit_home + slash + subreddit,
+links = SelScraper.collect_links(page = reddit_home + slash + subreddit + sort_by,
                                  scroll_n_times = scroll_n_times,
                                  xpath = xpath)
 
