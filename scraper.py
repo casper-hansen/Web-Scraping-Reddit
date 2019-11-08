@@ -11,7 +11,7 @@ BSoupScraper = SoupScraper(reddit_home,
                            slash,
                            subreddit)
 
-SelScraper.setup_chrome_browser("/Users/casperbogeskovhansen/Downloads/chromedriver")
+SelScraper.setup_chrome_browser()
 
 # Selects all the a elements that have a "data-click-id" attribute with a value of "body"
 # https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean

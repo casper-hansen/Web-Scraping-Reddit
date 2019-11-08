@@ -1,5 +1,6 @@
 import time
 import json
+import os
 from selenium import webdriver
 
 class SeleniumScraper():
@@ -8,8 +9,7 @@ class SeleniumScraper():
         self.page = ''
         self.links = []
     
-    def setup_chrome_browser(self,
-                             path_chromedriver):
+    def setup_chrome_browser(self):
         '''
             This function allows for setting up a chrome driver for use with
             Selenium. It expects a path to a chromedriver, available for download
@@ -19,7 +19,9 @@ class SeleniumScraper():
         prefs = {"profile.default_content_setting_values.notifications" : 2}
         options.add_experimental_option("prefs", prefs)
         
-        self.driver = webdriver.Chrome(executable_path = path_chromedriver,
+        path = os.path.dirname(os.path.abspath(__file__))
+        
+        self.driver = webdriver.Chrome(executable_path = path +  "/chromedriver",
                                        options=options)
         
     def collect_links(self,
