@@ -5,12 +5,10 @@ If you found this repository useful, consider giving it a star, such that you ea
 
 ## Install
 
-To run this project, you need to have the following (besides Python 3+):
+To run this project, you need to have the following (besides [Python 3+](https://www.python.org/downloads/)):
 
-1. Chrome browser installed on your computer.
-2. Download the [chromedriver](https://chromedriver.chromium.org/home).
-3. Have a conda or pip environment such that you can install packages.
-4. Install the packages specified below.
+1. [Chrome browser](https://www.google.com/chrome/) installed on your computer.
+2. Install the packages specified below with pip or conda.
 
 ### Install the needed packages with pip:
 
