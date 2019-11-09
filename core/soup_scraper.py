@@ -83,7 +83,9 @@ class SoupScraper():
             Gets the title of the post
         '''
         
-        title = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['title']
+        title = self.single_post_data['posts']\
+                                     ['models']\
+                                     ['t3_' + self.url_ids[self.index]]['title']
         self.titles.append(title)
         
     def get_upvote_ratio(self):
@@ -91,7 +93,11 @@ class SoupScraper():
             Gets the upvote ratio of the post
         '''
         
-        ratio = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['upvoteRatio']
+        ratio = self.single_post_data['posts']\
+                                     ['models']\
+                                     ['t3_' + self.url_ids[self.index]]\
+                                     ['upvoteRatio']
+        
         self.upvote_ratios.append(ratio)
     
     def get_score(self):
@@ -99,11 +105,17 @@ class SoupScraper():
             Gets the score of the post
         '''
         
-        score = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['score']
+        score = self.single_post_data['posts']\
+                                     ['models']\
+                                     ['t3_' + self.url_ids[self.index]]\
+                                     ['score']
         self.scores.append(score)
     
     def get_posted_time(self):
-        time = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['created']
+        time = self.single_post_data['posts']\
+                                    ['models']\
+                                    ['t3_' + self.url_ids[self.index]]\
+                                    ['created']
         self.milli_seconds_time_of_post.append(time)
     
     def get_flairs(self):
@@ -111,7 +123,10 @@ class SoupScraper():
             Get the flair of the post
         '''
         
-        flairs = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['flair']
+        flairs = self.single_post_data['posts']\
+                                      ['models']\
+                                      ['t3_' + self.url_ids[self.index]]\
+                                      ['flair']
         
         flair_arr = []
         
@@ -125,7 +140,11 @@ class SoupScraper():
             Get the number of golds for post
         '''
         
-        gold = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['goldCount']
+        gold = self.single_post_data['posts']\
+                                    ['models']\
+                                    ['t3_' + self.url_ids[self.index]]\
+                                    ['goldCount']
+                                    
         self.gold_counts.append(gold)
     
     def get_author(self):
@@ -133,14 +152,21 @@ class SoupScraper():
             Get the author of the post
         '''
         
-        author = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['author']
+        author = self.single_post_data['posts']\
+                                      ['models']\
+                                      ['t3_' + self.url_ids[self.index]]\
+                                      ['author']
+                                      
         self.authors.append(author)
     
     def get_category(self):
         '''
             Gets the category of the subreddit
         '''
-        categories = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['postCategories']
+        categories = self.single_post_data['posts']\
+                                          ['models']\
+                                          ['t3_' + self.url_ids[self.index]]\
+                                          ['postCategories']
         
         cat_arr = []
         
@@ -153,7 +179,11 @@ class SoupScraper():
         '''
             Gets the total number of comments on a post
         '''
-        total_num_comments = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['numComments']
+        total_num_comments = self.single_post_data['posts']\
+                                                  ['models']\
+                                                  ['t3_' + self.url_ids[self.index]]\
+                                                  ['numComments']
+                                                 
         self.total_num_comments.append(total_num_comments)
     
     def get_main_link(self):
