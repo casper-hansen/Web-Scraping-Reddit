@@ -15,13 +15,19 @@ class SeleniumScraper():
             Selenium. It expects a path to a chromedriver, available for download
             on this link: https://chromedriver.chromium.org/home
         '''
+        
+        if os.name == 'posix':
+            chromedriver = '/chromedriver'
+        elif os.name == 'nt':
+            chromedriver = '/chromedriver.exe'
+        
         options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications" : 2}
         options.add_experimental_option("prefs", prefs)
         
         path = os.path.dirname(os.path.abspath(__file__))
         
-        self.driver = webdriver.Chrome(executable_path = path +  "/chromedriver",
+        self.driver = webdriver.Chrome(executable_path = path +  chromedriver,
                                        options=options)
         
     def collect_links(self,
