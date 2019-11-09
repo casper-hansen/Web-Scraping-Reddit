@@ -24,6 +24,7 @@ class SeleniumScraper():
         options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications" : 2}
         options.add_experimental_option("prefs", prefs)
+        options.add_argument("--headless")
         
         path = os.path.dirname(os.path.abspath(__file__))
         
