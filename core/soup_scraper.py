@@ -29,6 +29,7 @@ class SoupScraper():
         self.categories = []
         self.total_num_comments = []
         self.post_links = []
+        self.main_links = []
     
     def get_scripts(self,
                     urls = []):
@@ -85,7 +86,8 @@ class SoupScraper():
         
         title = self.single_post_data['posts']\
                                      ['models']\
-                                     ['t3_' + self.url_ids[self.index]]['title']
+                                     ['t3_' + self.url_ids[self.index]]\
+                                     ['title']
         self.titles.append(title)
         
     def get_upvote_ratio(self):
@@ -187,7 +189,35 @@ class SoupScraper():
         self.total_num_comments.append(total_num_comments)
     
     def get_main_link(self):
-        return None
+        '''
+            If the post links to a third party URL, it will be in the post
+            instead of text/discussion of some topic.
+            
+            Returns main link to other URL.
+        
+        
+        curr_url = self.urls[self.index]
+        
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        r = requests.get(curr_url, headers=headers)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        
+        a_tag = soup.find('a', {'class' : 'styled-outbound-link'})
+        
+        if(a_tag is not None):
+            self.main_links.append(a_tag['href'])
+        else:
+            self.main_links.append(None)
+        '''
+        main_link = self.single_post_data['posts']\
+                                         ['models']\
+                                         ['t3_' + self.url_ids[self.index]]\
+                                         ['source']
+        if main_link is not None:
+            main_link = main_link['url']
+            
+        self.main_links.append(main_link)
+        
     
     def get_links_from_post(self):
         '''
