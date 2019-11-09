@@ -1,5 +1,6 @@
 from core.selenium_scraper import SeleniumScraper
 from core.soup_scraper import SoupScraper
+from tqdm import tqdm
 
 reddit_home = 'https://www.reddit.com'
 slash = '/r/'
@@ -31,7 +32,7 @@ script_data = BSoupScraper.get_scripts(urls = links)
 # Transforms each script with data into a Python dict, returned as [{}, {}...]
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
-for i, current_data in enumerate(BSoupScraper.data):
+for i, current_data in enumerate(tqdm(BSoupScraper.data)):
     BSoupScraper.get_url_id_and_url_title(BSoupScraper.urls[i],
                                           current_data, i)
     
