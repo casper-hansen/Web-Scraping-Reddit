@@ -194,20 +194,6 @@ class SoupScraper():
             instead of text/discussion of some topic.
             
             Returns main link to other URL.
-        
-        
-        curr_url = self.urls[self.index]
-        
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        r = requests.get(curr_url, headers=headers)
-        soup = BeautifulSoup(r.text, 'html.parser')
-        
-        a_tag = soup.find('a', {'class' : 'styled-outbound-link'})
-        
-        if(a_tag is not None):
-            self.main_links.append(a_tag['href'])
-        else:
-            self.main_links.append(None)
         '''
         main_link = self.single_post_data['posts']\
                                          ['models']\
