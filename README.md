@@ -14,11 +14,11 @@ To run this project, you need to have the following (besides [Python 3+](https:/
 ### Install the needed packages with pip:
 
 ```
-pip install beautifulsoup4 selenium
+pip install beautifulsoup4 selenium tqdm
 ```
 
 ### Install the needed packages with conda:
 
 ```
-conda install -c anaconda -y beautifulsoup4 selenium
+conda install -c anaconda -y beautifulsoup4 selenium tqdm
 ```
