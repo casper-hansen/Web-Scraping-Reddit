@@ -28,6 +28,7 @@ class SoupScraper():
         self.gold_counts = []
         self.categories = []
         self.total_num_comments = []
+        self.post_links = []
     
     def get_scripts(self,
                     urls = []):
@@ -149,6 +150,9 @@ class SoupScraper():
         self.categories.append(cat_arr)
     
     def get_total_num_comments(self):
+        '''
+            Gets the total number of comments on a post
+        '''
         total_num_comments = self.single_post_data['posts']['models']['t3_' + self.url_ids[self.index]]['numComments']
         self.total_num_comments.append(total_num_comments)
     
@@ -156,8 +160,26 @@ class SoupScraper():
         return None
     
     def get_links_from_post(self):
-        return None
-    
+        '''
+            Gets all links from a post
+        '''
+        
+        all_links_from_post = []
+        
+        curr_url = self.urls[self.index]
+        
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        r = requests.get(curr_url, headers=headers)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        
+        div = soup.find('div', attrs={'data-click-id' : 'text'})
+        
+        if(div is not None):
+            for a in div.find_all('a'):
+                all_links_from_post.append(a['href'])
+        
+        self.post_links.append(all_links_from_post)
+        
     def get_comment_ids(self):
         '''
             Gets all comment ids for each post.
