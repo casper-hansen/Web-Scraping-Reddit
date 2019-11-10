@@ -74,6 +74,8 @@ class SeleniumScraper():
         finally:
             self.driver.quit()
         
+        print(('Collected {0} links').format(len(self.links)))
+        
         return self.links
 
     
@@ -82,9 +84,10 @@ class SeleniumScraper():
         '''
             Takes id='data' as input and outputs a dict with all ids from page input
         '''
+        
         pure_dicts = []
         
-        for data in script_data:
+        for data in script_data:            
             first_index = data.index('{')
             last_index = data.rfind('}') + 1
             

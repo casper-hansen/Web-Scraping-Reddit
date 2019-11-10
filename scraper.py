@@ -1,6 +1,6 @@
 from core.selenium_scraper import SeleniumScraper
 from core.soup_scraper import SoupScraper
-from tqdm import tqdm
+from core.progress_bar import ProgressBar
 import time
 
 reddit_home = 'https://www.reddit.com'
@@ -20,14 +20,12 @@ SelScraper.setup_chrome_browser()
 # Selects all the a elements that have a "data-click-id" attribute with a value of "body"
 # https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean
 xpath = "//a[@data-click-id='body']"
-scroll_n_times = 0
+scroll_n_times = 10
 
 # Collect links from subreddit
 links = SelScraper.collect_links(page = reddit_home + slash + subreddit + sort_by,
                                  scroll_n_times = scroll_n_times,
                                  xpath = xpath)
-
-print(('Caught {0} links. Getting data dicts from links now...').format(len(links)))
 
 # Find the <script> with id='data' for each link
 script_data = BSoupScraper.get_scripts(urls = links)
@@ -35,10 +33,13 @@ script_data = BSoupScraper.get_scripts(urls = links)
 # Transforms each script with data into a Python dict, returned as [{}, {}...]
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
-for i, current_data in enumerate(tqdm(BSoupScraper.data, position=0, leave=True)):
+print('\nScraping data...')
+progress = ProgressBar(len(links), fmt=ProgressBar.FULL)
+for i, current_data in enumerate(BSoupScraper.data):
+    progress.update()
+    
     BSoupScraper.get_url_id_and_url_title(BSoupScraper.urls[i],
                                           current_data, i)
-    
     BSoupScraper.get_title()
     BSoupScraper.get_upvote_ratio()
     BSoupScraper.get_score()
@@ -53,5 +54,4 @@ for i, current_data in enumerate(tqdm(BSoupScraper.data, position=0, leave=True)
     BSoupScraper.get_main_link()
 
 end = time.time()
-
 print(('\nIt took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))

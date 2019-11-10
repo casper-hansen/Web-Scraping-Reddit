@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from core.progress_bar import ProgressBar
 
 class SoupScraper():
     
@@ -36,12 +37,15 @@ class SoupScraper():
         '''
             Finds the script with id of data
         '''
+        print('Finding <script id="data"> for each link')
         
         self.urls = urls
         
         pure_script_data = []
         
+        progress = ProgressBar(len(urls), fmt=ProgressBar.FULL)
         for url in urls:
+            progress.update()
             headers = {'User-Agent': 'Mozilla/5.0'}
             r = requests.get(url, headers=headers)
             
