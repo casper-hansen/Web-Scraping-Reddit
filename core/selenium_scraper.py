@@ -55,6 +55,9 @@ class SeleniumScraper():
                 links : array
                     An array of links to the URLs scraped.
         '''
+        if(scroll_n_times < 0):
+            raise ValueError('scroll_n_times must be greater than or equal to 0')
+        
         self.page = page
         self.driver.get(page)
         
