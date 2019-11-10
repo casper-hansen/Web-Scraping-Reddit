@@ -63,7 +63,7 @@ class SeleniumScraper():
             while scroll_n_times:
                 # Scrolls browser to the bottom of the page
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                time.sleep(0.5)
+                time.sleep(0.8)
                 scroll_n_times -= 1
             
             elements = self.driver.find_elements_by_xpath(xpath)
