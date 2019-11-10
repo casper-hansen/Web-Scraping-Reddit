@@ -9,6 +9,7 @@ To run this project, you need to have the following (besides [Python 3+](https:/
 
 1. [Chrome browser](https://www.google.com/chrome/) installed on your computer.
 2. Check your browser version here chrome://settings/help. Download the corresponding [chromedriver version here](https://chromedriver.chromium.org/downloads).
+3. Place the chromerdriver in the *core* folder of this project.
 3. Install the packages specified below with pip or conda.
 
 ### Install the needed packages with pip:
