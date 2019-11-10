@@ -43,7 +43,7 @@ class SoupScraper():
         
         pure_script_data = []
         
-        progress = ProgressBar(len(urls), fmt=ProgressBar.FULL)
+        progress = ProgressBar(len(urls))
         for url in urls:
             progress.update()
             headers = {'User-Agent': 'Mozilla/5.0'}

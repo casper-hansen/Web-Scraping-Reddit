@@ -34,7 +34,7 @@ script_data = BSoupScraper.get_scripts(urls = links)
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
 print('\nScraping data...')
-progress = ProgressBar(len(links), fmt=ProgressBar.FULL)
+progress = ProgressBar(len(links))
 for i, current_data in enumerate(BSoupScraper.data):
     progress.update()
     
