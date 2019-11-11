@@ -33,7 +33,7 @@ script_data = BSoupScraper.get_scripts(urls = links)
 # Transforms each script with data into a Python dict, returned as [{}, {}...]
 BSoupScraper.data = SelScraper.reddit_data_to_dict(script_data = script_data)
 
-print('\nScraping data...')
+print('Scraping data...')
 progress = ProgressBar(len(links))
 for i, current_data in enumerate(BSoupScraper.data):
     progress.update()
@@ -54,4 +54,4 @@ for i, current_data in enumerate(BSoupScraper.data):
     BSoupScraper.get_main_link()
 
 end = time.time()
-print(('\nIt took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))
+print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))

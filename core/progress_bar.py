@@ -38,3 +38,4 @@ class ProgressBar(object):
         
         if(self.current == self.total):
             self.current = self.total
+            print('\n')
