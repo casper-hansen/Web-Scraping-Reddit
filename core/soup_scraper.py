@@ -15,6 +15,7 @@ class SoupScraper():
         self.single_post_data = {}
         self.index = 0
         
+        self.pure_html = []
         self.pure_script_data = []
         self.urls = []
         self.data = []
@@ -31,7 +32,8 @@ class SoupScraper():
         self.total_num_comments = []
         self.post_links = []
         self.main_links = []
-    
+        self.texts = []
+        
     def get_scripts(self,
                     urls = []):
         '''
@@ -41,6 +43,7 @@ class SoupScraper():
         
         self.urls = urls
         
+        pure_html_data = []
         pure_script_data = []
         
         progress = ProgressBar(len(urls))
@@ -51,8 +54,10 @@ class SoupScraper():
             
             soup = BeautifulSoup(r.text, 'html.parser')
             
+            pure_html_data.append(r.text)
             pure_script_data.append(soup.find(id='data').text)
-        
+            
+        self.pure_html = pure_html_data
         self.pure_script_data = pure_script_data
         
         return pure_script_data
@@ -216,19 +221,32 @@ class SoupScraper():
         
         all_links_from_post = []
         
-        curr_url = self.urls[self.index]
-        
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        r = requests.get(curr_url, headers=headers)
-        soup = BeautifulSoup(r.text, 'html.parser')
-        
+        curr_html = self.pure_html[self.index]
+        soup = BeautifulSoup(curr_html, 'html.parser')
         div = soup.find('div', attrs={'data-click-id' : 'text'})
         
         if(div is not None):
             for a in div.find_all('a'):
                 all_links_from_post.append(a['href'])
+        else:
+             all_links_from_post.append('')
         
         self.post_links.append(all_links_from_post)
+        
+    def get_text(self):
+        '''
+            Posts have text in them, which this method scrapes
+        '''
+        
+        curr_html = self.pure_html[self.index]
+        soup = BeautifulSoup(curr_html, 'html.parser')
+        div = soup.find('div', attrs={'data-click-id' : 'text'})
+        
+        if(div is not None):
+            self.texts.append(div.getText())
+        else:
+            self.texts.append('')
+        
         
     def get_comment_ids(self):
         '''
