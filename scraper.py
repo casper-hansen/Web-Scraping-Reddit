@@ -17,15 +17,9 @@ BSoupScraper = SoupScraper(reddit_home,
 
 SelScraper.setup_chrome_browser()
 
-# Selects all the a elements that have a "data-click-id" attribute with a value of "body"
-# https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean
-xpath = "//a[@data-click-id='body']"
-scroll_n_times = 0
-
 # Collect links from subreddit
 links = SelScraper.collect_links(page = reddit_home + slash + subreddit + sort_by,
-                                 scroll_n_times = scroll_n_times,
-                                 xpath = xpath)
+                                 scroll_n_times = 0)
 
 # Find the <script> with id='data' for each link
 script_data = BSoupScraper.get_scripts(urls = links)

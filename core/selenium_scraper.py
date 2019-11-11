@@ -33,8 +33,7 @@ class SeleniumScraper():
         
     def collect_links(self,
                       page,
-                      scroll_n_times,
-                      xpath):
+                      scroll_n_times):
         '''
             This function opens a page in a browser and scrolls n times to the
             bottom of the page. After that, it finds all the elements as
@@ -60,6 +59,10 @@ class SeleniumScraper():
         
         self.page = page
         self.driver.get(page)
+        
+        # Selects all the a elements that have a "data-click-id" attribute with a value of "body"
+        # https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean
+        xpath = "//a[@data-click-id='body']"
         
         try:
             # When scroll_n_times = 0, loop stops
