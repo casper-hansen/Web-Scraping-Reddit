@@ -255,4 +255,8 @@ class SoupScraper():
             https://www.reddit.com/r/MachineLearning/comments/dtfx9m/rtheoretical_research_paper_in_gans/f6wbrvh
         '''
         
+        comment_ids = self.single_post_data['commentsPage']\
+                                           ['keyToCommentThreadLinkSets']\
+                                           ["commentsPage--[post:'t3_" + self.url_ids[self.index] + "']"]
+        
         return None
