@@ -7,7 +7,7 @@ reddit_home = 'https://www.reddit.com'
 slash = '/r/'
 subreddit = 'MachineLearning'
 sort_by = '/hot/'
-scroll_n_times = 2
+scroll_n_times = 0
 
 start = time.time()
 
@@ -48,7 +48,10 @@ for i, current_data in enumerate(BSS.data):
     BSS.get_links_from_post()
     BSS.get_main_link()
     BSS.get_text()
-
+    BSS.get_comment_ids()
+    BSS.get_comment_structure_and_store()
+    break
+    
 time.sleep(1)
 end = time.time()
 print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))

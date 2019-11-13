@@ -33,6 +33,9 @@ class SoupScraper():
         self.post_links = []
         self.main_links = []
         self.texts = []
+        self.comment_ids = []
+        self.base_comments = []
+        self.comment_threads_for_base_comments = []
         
     def get_scripts(self,
                     urls = []):
@@ -56,6 +59,7 @@ class SoupScraper():
             
             pure_html_data.append(r.text)
             pure_script_data.append(soup.find(id='data').text)
+            break
             
         self.pure_html = pure_html_data
         self.pure_script_data = pure_script_data
@@ -259,4 +263,42 @@ class SoupScraper():
                                            ['keyToCommentThreadLinkSets']\
                                            ["commentsPage--[post:'t3_" + self.url_ids[self.index] + "']"]
         
-        return None
+        self.comment_ids.append(comment_ids)
+        
+    def get_comment_structure_and_store(self):
+        comment_ids = self.comment_ids[self.index]
+        
+        def _extract_id_helper(next_id):
+            try:
+                # In the case where the id looks like
+                # 'id': 'continueThread-t1_f5nr9e5'
+                return next_id.split('-')[1]
+            except Exception:
+                # The id is good as is
+                return next_id
+        
+        # depth continues forever..
+        for key, item in comment_ids.items():
+            if (item['depth'] == 0):
+                self.base_comments.append(key)
+                
+                next_comment_id = item['next']
+                if(next_comment_id is not None):
+                    next_comment_id = next_comment_id['id']
+                    next_comment_id = _extract_id_helper(next_comment_id)
+                    next_comment = comment_ids[next_comment_id]
+                    
+                    if(next_comment['depth'] > 0):
+                        self.comment_threads_for_base_comments.append(next_comment)
+                        
+                        deep_comment = next_comment['next']['id']
+                        actual_id = deep_comment
+                        
+                        deeper_comment = comment_ids[actual_id]
+                        
+                        print(deeper_comment)
+                        
+                            
+                        
+                #prev_comment = item['prev']['id']
+                
