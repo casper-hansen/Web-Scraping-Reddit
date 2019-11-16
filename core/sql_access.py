@@ -21,7 +21,7 @@ class SqlAccess():
         
         c.execute('''CREATE TABLE IF NOT EXISTS post
                      (
-                     id             int         PRIMARY KEY,
+                     id             INTEGER     PRIMARY KEY,
                      url_id         varchar     NOT NULL,
                      url_title      varchar     NOT NULL,
                      author         varchar     NOT NULL,
@@ -39,7 +39,7 @@ class SqlAccess():
         
         c.execute('''CREATE TABLE IF NOT EXISTS comment
                      (
-                     post_id        int         PRIMARY KEY,
+                     post_id        INTEGER     PRIMARY KEY,
                      comment_id     varchar     NOT NULL,
                      depth          int         NOT NULL,
                      next           varchar,
@@ -49,7 +49,7 @@ class SqlAccess():
                      
         c.execute('''CREATE TABLE IF NOT EXISTS link
                      (
-                     post_id        int         PRIMARY KEY,
+                     post_id        INTEGER     PRIMARY KEY,
                      link           varchar     NOT NULL
                      )
                      ''')
