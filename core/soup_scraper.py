@@ -1,4 +1,5 @@
 import requests
+import datetime
 from bs4 import BeautifulSoup
 from core.progress_bar import ProgressBar
 
@@ -24,7 +25,7 @@ class SoupScraper():
         self.titles = []
         self.upvote_ratios = []
         self.scores = []
-        self.milli_seconds_time_of_post = []
+        self.post_datetime = []
         self.authors = []
         self.flairs = []
         self.gold_counts = []
@@ -124,11 +125,16 @@ class SoupScraper():
         self.scores.append(score)
     
     def get_posted_time(self):
+        '''
+            Gets the posted time in milliseconds from unix time and converts
+            to datetime
+        '''
         time = self.single_post_data['posts']\
                                     ['models']\
                                     ['t3_' + self.url_ids[self.index]]\
                                     ['created']
-        self.milli_seconds_time_of_post.append(time)
+        time = datetime.datetime.fromtimestamp(time//1000.0)
+        self.post_datetime.append(time)
     
     def get_flairs(self):
         '''

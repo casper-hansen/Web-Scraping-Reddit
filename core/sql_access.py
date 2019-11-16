@@ -17,7 +17,7 @@ class SqlAccess():
         
         # Creates and/or connects to SQLite database
         self.conn = sqlite3.connect(('{0}.db').format(self.db_name))
-        c = self.conn
+        c = self.conn.cursor()
         
         c.execute('''CREATE TABLE IF NOT EXISTS post
                      (
