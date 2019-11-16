@@ -21,7 +21,8 @@ BSS = SoupScraper(reddit_home,
 SelScraper.setup_chrome_browser()
 
 # Collect links from subreddit
-links = SelScraper.collect_links(page = reddit_home + slash + subreddit + sort_by,
+links = SelScraper.collect_links(page = reddit_home + 
+                                        slash + subreddit + sort_by,
                                  scroll_n_times = scroll_n_times)
 
 # Find the <script> with id='data' for each link
@@ -54,6 +55,10 @@ for i, current_data in enumerate(BSS.data):
     
 time.sleep(1)
 end = time.time()
-print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))
+print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1),
+                                                         len(links)))
 
-SQL.create_or_connect_db()
+try:
+    SQL.create_or_connect_db()
+finally:
+    SQL.save_changes()

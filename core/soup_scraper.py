@@ -34,8 +34,6 @@ class SoupScraper():
         self.main_links = []
         self.texts = []
         self.comment_ids = []
-        self.base_comments = []
-        self.comment_threads_for_base_comments = []
         
     def get_scripts(self,
                     urls = []):
@@ -263,4 +261,4 @@ class SoupScraper():
                                            ["commentsPage--[post:'t3_" + self.url_ids[self.index] + "']"]
         
         self.comment_ids.append(comment_ids)
-                
+            

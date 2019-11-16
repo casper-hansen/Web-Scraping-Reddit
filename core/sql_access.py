@@ -14,14 +14,18 @@ class SqlAccess():
     def create_or_connect_db(self):
         self.conn = sqlite3.connect(('{0}.db').format(self.db_name))
     
-    def create():
+    def save_changes(self):
+        self.conn.commit()
+        self.conn.close()
+    
+    def create(self):
         pass
     
-    def read():
+    def read(self):
         pass
     
-    def update():
+    def update(self):
         pass
     
-    def delete():
+    def delete(self):
         pass

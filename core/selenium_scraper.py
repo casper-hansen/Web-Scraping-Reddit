@@ -12,8 +12,8 @@ class SeleniumScraper():
     def setup_chrome_browser(self):
         '''
             This function allows for setting up a chrome driver for use with
-            Selenium. It expects a path to a chromedriver, available for download
-            on this link: https://chromedriver.chromium.org/home
+            Selenium. It expects a path to a chromedriver, available for 
+            download on this link: https://chromedriver.chromium.org/home
         '''
         
         if os.name == 'posix':
@@ -55,7 +55,8 @@ class SeleniumScraper():
                     An array of links to the URLs scraped.
         '''
         if(scroll_n_times < 0):
-            raise ValueError('scroll_n_times must be greater than or equal to 0')
+            raise ValueError('scroll_n_times must be greater' +
+                             'than or equal to 0')
         
         self.page = page
         self.driver.get(page)
@@ -65,13 +66,15 @@ class SeleniumScraper():
         xpath = "//a[@data-click-id='body']"
         
         sleep_time = 0.8
-        print(('Opening reddit and scrolling: takes approximately {0} seconds').format(sleep_time*scroll_n_times))
+        print(('Opening reddit and scrolling: takes approximately {0} seconds'
+               ).format(sleep_time*scroll_n_times))
         
         try:
             # When scroll_n_times = 0, loop stops
             while scroll_n_times:
                 # Scrolls browser to the bottom of the page
-                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                self.driver.execute_script(
+                        "window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(sleep_time)
                 scroll_n_times -= 1
             
@@ -91,7 +94,8 @@ class SeleniumScraper():
     def reddit_data_to_dict(self,
                             script_data = []):
         '''
-            Takes id='data' as input and outputs a dict with all ids from page input
+            Takes id='data' as input and outputs a dict with all ids from 
+            page input
         '''
         
         pure_dicts = []
