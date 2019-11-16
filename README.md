@@ -24,4 +24,4 @@ pip install beautifulsoup4 selenium
 conda install -c anaconda -y beautifulsoup4 selenium
 ```
 
-**Note**: If your Chrome browser automatically updates to a new version, the chromedriver that you downloaded will almost surely not work.
+**Note**: If your Chrome browser automatically updates to a new version, the chromedriver that you downloaded will almost surely not work, after an automatic update.
