@@ -59,6 +59,6 @@ print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1),
                                                          len(links)))
 
 try:
-    SQL.create_or_connect_db()
+    SQL.create_or_connect_db(True)
 finally:
     SQL.save_changes()
