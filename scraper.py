@@ -1,6 +1,7 @@
 from core.selenium_scraper import SeleniumScraper
 from core.soup_scraper import SoupScraper
 from core.progress_bar import ProgressBar
+from core.sql_access import SqlAccess
 import time
 
 reddit_home = 'https://www.reddit.com'
@@ -11,6 +12,7 @@ scroll_n_times = 0
 
 start = time.time()
 
+SQL = SqlAccess()
 SelScraper = SeleniumScraper()
 BSS = SoupScraper(reddit_home,
                   slash,
@@ -49,9 +51,9 @@ for i, current_data in enumerate(BSS.data):
     BSS.get_main_link()
     BSS.get_text()
     BSS.get_comment_ids()
-    BSS.get_comment_structure_and_store()
-    break
     
 time.sleep(1)
 end = time.time()
 print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1), len(links)))
+
+SQL.create_or_connect_db()

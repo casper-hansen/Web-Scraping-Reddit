@@ -64,12 +64,15 @@ class SeleniumScraper():
         # https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean
         xpath = "//a[@data-click-id='body']"
         
+        sleep_time = 0.8
+        print(('Opening reddit and scrolling: takes approximately {0} seconds').format(sleep_time*scroll_n_times))
+        
         try:
             # When scroll_n_times = 0, loop stops
             while scroll_n_times:
                 # Scrolls browser to the bottom of the page
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                time.sleep(0.8)
+                time.sleep(sleep_time)
                 scroll_n_times -= 1
             
             elements = self.driver.find_elements_by_xpath(xpath)
