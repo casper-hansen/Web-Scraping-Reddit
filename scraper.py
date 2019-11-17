@@ -47,7 +47,6 @@ for i, current_data in enumerate(BSS.data):
     BSS.get_num_gold()
     BSS.get_category()
     BSS.get_total_num_comments()
-    BSS.get_comment_ids()
     BSS.get_links_from_post()
     BSS.get_main_link()
     BSS.get_text()
@@ -58,8 +57,11 @@ end = time.time()
 print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1),
                                                          len(links)))
 
+BSS.prepare_data_for_sql()
+
 try:
     SQL.create_or_connect_db(erase_first=True)
+    SQL.insert('post', data = BSS.prepare_data_for_sql())
 except Exception as ex:
     print(ex)
 finally:

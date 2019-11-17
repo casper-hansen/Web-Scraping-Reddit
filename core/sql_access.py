@@ -21,7 +21,8 @@ class SqlAccess():
         
         c.execute('''CREATE TABLE IF NOT EXISTS post
                      (
-                     id             INTEGER     PRIMARY KEY,
+                     id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
+                     url            varchar     NOT NULL,
                      url_id         varchar     NOT NULL,
                      url_title      varchar     NOT NULL,
                      author         varchar     NOT NULL,
@@ -29,6 +30,7 @@ class SqlAccess():
                      score          int         NOT NULL,
                      time_created   datetime    NOT NULL,
                      num_gold       int,
+                     num_comments   int,
                      category       varchar,
                      text           varchar,
                      main_link      varchar,
@@ -39,7 +41,7 @@ class SqlAccess():
         
         c.execute('''CREATE TABLE IF NOT EXISTS comment
                      (
-                     post_id        INTEGER     PRIMARY KEY,
+                     post_id        INTEGER     PRIMARY KEY     AUTOINCREMENT,
                      comment_id     varchar     NOT NULL,
                      depth          int         NOT NULL,
                      next           varchar,
@@ -49,7 +51,7 @@ class SqlAccess():
                      
         c.execute('''CREATE TABLE IF NOT EXISTS link
                      (
-                     post_id        INTEGER     PRIMARY KEY,
+                     post_id        INTEGER     PRIMARY KEY     AUTOINCREMENT,
                      link           varchar     NOT NULL
                      )
                      ''')
@@ -57,15 +59,31 @@ class SqlAccess():
     def save_changes(self):
         self.conn.commit()
         self.conn.close()
+        
+    def _question_mark_creator(self,
+                               n_question_marks):
+        final_string = ''
+        
+        for i in range(n_question_marks):
+            final_string += '?,'
+            
+        final_string += '?'
+        
+        return final_string
+
+    def insert(self,
+               table,
+               data):
+        c = self.conn
+        
+        cols = c.execute(('''
+                        PRAGMA table_info({0})
+                        ''').format(table))
+        num_cols = sum([1 for i in cols]) - 1
+        question_marks = self._question_mark_creator(num_cols)
+        
+        if table == 'post':
+            c.execute(('''INSERT INTO {0}
+                          VALUES ({1})'''
+                      ).format(table, question_marks), data)
     
-    def create(self):
-        pass
-    
-    def read(self):
-        pass
-    
-    def update(self):
-        pass
-    
-    def delete(self):
-        pass

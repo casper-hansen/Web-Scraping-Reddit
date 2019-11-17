@@ -15,26 +15,27 @@ class SoupScraper():
         
         self.single_post_data = {}
         self.index = 0
-        
         self.pure_html = []
         self.pure_script_data = []
-        self.urls = []
         self.data = []
+        
+        self.urls = []
         self.url_ids = []
         self.url_titles = []
         self.titles = []
+        self.authors = []
         self.upvote_ratios = []
         self.scores = []
         self.post_datetime = []
-        self.authors = []
-        self.flairs = []
         self.gold_counts = []
-        self.categories = []
         self.total_num_comments = []
-        self.post_links = []
-        self.main_links = []
+        self.categories = []
         self.texts = []
+        self.main_links = []
+        self.flairs = []
         self.comment_ids = []
+        self.post_links = []
+        
         
     def get_scripts(self,
                     urls = []):
@@ -267,4 +268,7 @@ class SoupScraper():
                                            ["commentsPage--[post:'t3_" + self.url_ids[self.index] + "']"]
         
         self.comment_ids.append(comment_ids)
+        
+    def prepare_data_for_sql(self):
+        pass
             
