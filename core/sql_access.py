@@ -6,6 +6,7 @@ class SqlAccess():
                  name = 'reddit_data'):
         self.conn = None
         self.db_name = name
+        self.llast_post_id = 0
     
     def erase_data_from_db(self):
         os.remove(('{0}.db').format(self.db_name))
@@ -36,8 +37,7 @@ class SqlAccess():
                      category       varchar,
                      text           varchar,
                      main_link      varchar,
-                     flairs         int,
-                     comments       int
+                     flairs         int
                      )
                      ''')
         
@@ -86,7 +86,7 @@ class SqlAccess():
             autoincremented ids can be retrieved after insertion. This would
             not be possible with .executemany() instead of .execute()
         '''
-        c = self.conn
+        c = self.conn.cursor()
         
         # Get the column names of the table we are trying to insert into
         cols = c.execute(('''
@@ -100,6 +100,13 @@ class SqlAccess():
         question_marks = self._question_mark_creator(num_cols)
         
         if table == 'post':
+            c.execute(('''INSERT INTO {0}
+                          VALUES ({1})'''
+                      ).format(table, question_marks), data)
+            
+            self.last_post_id = c.lastrowid
+            
+        elif table == 'comment' or table == 'link':
             c.execute(('''INSERT INTO {0}
                           VALUES ({1})'''
                       ).format(table, question_marks), data)

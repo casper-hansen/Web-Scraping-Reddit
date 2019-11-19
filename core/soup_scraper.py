@@ -276,5 +276,41 @@ class SoupScraper():
         self.comment_ids.append(comment_ids)
         
     def prepare_data_for_sql(self):
-        pass
+        '''
+            We define three arrays of data, one array for each table in the
+            created SQL database.
+        '''
+        
+        post_data = []
+        comment_data = []
+        link_data = []
+        
+        for i in range(len(self.urls)):
+            # append data to post_data
+            post = [None,                       # id
+                    self.urls[i],               # url
+                    self.url_ids[i],            # url_id
+                    self.url_titles[i],         # url_title
+                    self.authors[i],            # author
+                    self.upvote_ratios[i],      # upvote_ratio
+                    self.scores[i],             # score
+                    self.post_datetime[i],      # time_created
+                    self.gold_counts[i],        # num_gold
+                    self.total_num_comments[i], # num_comments
+                    self.categories[i],         # category
+                    self.texts[i],              # text
+                    self.main_links[i],         # main_link
+                    self.flairs[i]              # flair
+                    ]
             
+            # append data to comment_data
+            comment = [None,
+                       None,
+                       self.comment_ids[i]
+                        ]
+            
+            # append data to link_data
+            link = [None,
+                    None,
+                    self.post_links
+                    ]
