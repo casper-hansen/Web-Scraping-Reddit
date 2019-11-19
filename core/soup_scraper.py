@@ -36,9 +36,11 @@ class SoupScraper():
         self.comment_ids = []
         self.post_links = []
         
-        # One array per post
+        # One array per post, with comment and link in same index
         # [ [post 1], [post 2],... ]
-        self.final_data = []
+        self.post_data = []
+        self.comment_data = []
+        self.link_data = []
         
         
     def get_scripts(self,
