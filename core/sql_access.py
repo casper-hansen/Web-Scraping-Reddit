@@ -19,6 +19,8 @@ class SqlAccess():
         self.conn = sqlite3.connect(('{0}.db').format(self.db_name))
         c = self.conn.cursor()
         
+        #c.execute('PRAGMA foreign_keys = 1')
+        
         c.execute('''CREATE TABLE IF NOT EXISTS post
                      (
                      id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
@@ -41,18 +43,22 @@ class SqlAccess():
         
         c.execute('''CREATE TABLE IF NOT EXISTS comment
                      (
-                     post_id        INTEGER     PRIMARY KEY     AUTOINCREMENT,
+                     id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
+                     post_id        int         NOT NULL,
                      comment_id     varchar     NOT NULL,
                      depth          int         NOT NULL,
                      next           varchar,
-                     previous       varchar
+                     previous       varchar,
+                     FOREIGN KEY (post_id) REFERENCES post (id)
                      )
                      ''')
                      
         c.execute('''CREATE TABLE IF NOT EXISTS link
                      (
-                     post_id        INTEGER     PRIMARY KEY     AUTOINCREMENT,
-                     link           varchar     NOT NULL
+                     id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
+                     post_id        int         NOT NULL,
+                     link           varchar     NOT NULL,
+                     FOREIGN KEY (post_id) REFERENCES post (id)
                      )
                      ''')
         
@@ -74,12 +80,23 @@ class SqlAccess():
     def insert(self,
                table,
                data):
+        '''
+            A general function for inserting data into tables.
+            Insert is made to be single insert only, such that the
+            autoincremented ids can be retrieved after insertion. This would
+            not be possible with .executemany() instead of .execute()
+        '''
         c = self.conn
         
+        # Get the column names of the table we are trying to insert into
         cols = c.execute(('''
                         PRAGMA table_info({0})
                         ''').format(table))
+        
+        # Get the number of columns
         num_cols = sum([1 for i in cols]) - 1
+        
+        # Generate question marks for VALUES insertion
         question_marks = self._question_mark_creator(num_cols)
         
         if table == 'post':
