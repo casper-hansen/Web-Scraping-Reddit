@@ -287,6 +287,9 @@ class SoupScraper():
         
         for i in range(len(self.urls)):
             # append data to post_data
+            flairs = ''.join([flair + ',' for flair in self.flairs[i]])
+            categories = ''.join([cat + ',' for cat in self.categories[i]])
+            
             post = [None,                       # id
                     self.urls[i],               # url
                     self.url_ids[i],            # url_id
@@ -297,10 +300,10 @@ class SoupScraper():
                     self.post_datetime[i],      # time_created
                     self.gold_counts[i],        # num_gold
                     self.total_num_comments[i], # num_comments
-                    self.categories[i],         # category
+                    categories,                 # category
                     self.texts[i],              # text
                     self.main_links[i],         # main_link
-                    self.flairs[i]              # flair
+                    flairs                      # flair
                     ]
             
             # append data to comment_data
@@ -314,3 +317,13 @@ class SoupScraper():
                     None,
                     self.post_links
                     ]
+            
+            post_data.append(post)
+            comment_data.append(comment)
+            link_data.append(link)
+            
+            
+        self.post_data = post_data
+        self.comment_data = comment_data
+        self.link_data = link_data
+        

@@ -61,8 +61,7 @@ BSS.prepare_data_for_sql()
 
 try:
     SQL.create_or_connect_db(erase_first=True)
-    SQL.insert('post', data = BSS.prepare_data_for_sql())
-except Exception as ex:
-    print(ex)
+    for post in BSS.post_data:
+        SQL.insert('post', data = post)
 finally:
     SQL.save_changes()

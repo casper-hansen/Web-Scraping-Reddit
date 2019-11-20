@@ -20,8 +20,6 @@ class SqlAccess():
         self.conn = sqlite3.connect(('{0}.db').format(self.db_name))
         c = self.conn.cursor()
         
-        #c.execute('PRAGMA foreign_keys = 1')
-        
         c.execute('''CREATE TABLE IF NOT EXISTS post
                      (
                      id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
