@@ -61,7 +61,10 @@ BSS.prepare_data_for_sql()
 
 try:
     SQL.create_or_connect_db(erase_first=True)
-    for post in BSS.post_data:
-        SQL.insert('post', data = post)
+    # [0] = post, [1] = comment, [2] = link
+    for i in range(len(BSS.post_data)):
+        SQL.insert('post', data = BSS.post_data[i])
+        #SQL.insert('comment', data = BSS.comment_data[i])
+        SQL.insert('link', data = BSS.link_data[i])
 finally:
     SQL.save_changes()

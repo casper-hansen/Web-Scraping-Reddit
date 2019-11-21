@@ -41,6 +41,7 @@ class SoupScraper():
         self.post_data = []
         self.comment_data = []
         self.link_data = []
+        self.zipped_data = []
         
         
     def get_scripts(self,
@@ -275,6 +276,21 @@ class SoupScraper():
         
         self.comment_ids.append(comment_ids)
         
+    def _extract_comment_ids_to_sql_format(self):
+        pass
+    
+    def _extract_post_links_to_sql_format(self,
+                                          links):
+        array_of_links = []
+        if(links != None and links != []):
+            for link in links:
+                link_arr = [None, 
+                            None, 
+                            link]
+                array_of_links.append(link_arr)
+                
+        return array_of_links
+        
     def prepare_data_for_sql(self):
         '''
             We define three arrays of data, one array for each table in the
@@ -313,17 +329,15 @@ class SoupScraper():
                         ]
             
             # append data to link_data
-            link = [None,
-                    None,
-                    self.post_links
-                    ]
+            links = self._extract_post_links_to_sql_format(self.post_links[i])
             
             post_data.append(post)
             comment_data.append(comment)
-            link_data.append(link)
+            link_data.append(links)
             
             
         self.post_data = post_data
         self.comment_data = comment_data
         self.link_data = link_data
+        self.zipped_data = zip(post_data, comment_data, link_data)
         

@@ -104,8 +104,12 @@ class SqlAccess():
             
             self.last_post_id = c.lastrowid
             
-        elif table == 'comment' or table == 'link':
-            c.execute(('''INSERT INTO {0}
-                          VALUES ({1})'''
-                      ).format(table, question_marks), data)
+        elif (table == 'comment' or table == 'link') \
+             and data != None and data != []:
+            # setting post_id to the last post id, inserted in the post insert
+            for table_data in data:
+                table_data[1] = self.last_post_id
+                c.execute(('''INSERT INTO {0}
+                              VALUES ({1})'''
+                          ).format(table, question_marks), table_data)
     
