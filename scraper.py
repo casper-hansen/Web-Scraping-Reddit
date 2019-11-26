@@ -66,5 +66,7 @@ try:
         SQL.insert('post', data = BSS.post_data[i])
         #SQL.insert('comment', data = BSS.comment_data[i])
         SQL.insert('link', data = BSS.link_data[i])
+except Exception as ex:
+    print(ex)
 finally:
     SQL.save_changes()

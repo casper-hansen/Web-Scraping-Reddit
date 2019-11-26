@@ -293,7 +293,7 @@ class SoupScraper():
             comment_url = curr_url + comment_id
             array_of_comments.append(comment_url)
             
-        print(array_of_comments)
+        return array_of_comments
             
     
     def _extract_post_links_to_sql_format(self,
@@ -340,9 +340,10 @@ class SoupScraper():
                     ]
             
             # append data to comment_data
-            comment = self._extract_comment_ids_to_sql_format(self.urls[i],
-                                                              self.comment_ids[i])
+            comment_id_links_array = self._extract_comment_ids_to_sql_format(self.urls[i],
+                                                                             self.comment_ids[i])
             
+            comment = None
             # append data to link_data
             links = self._extract_post_links_to_sql_format(self.post_links[i])
             

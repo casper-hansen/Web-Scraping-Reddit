@@ -6,15 +6,14 @@ class SqlAccess():
                  name = 'reddit_data'):
         self.conn = None
         self.db_name = name
-        self.llast_post_id = 0
-    
-    def erase_data_from_db(self):
-        os.remove(('{0}.db').format(self.db_name))
-        self.create_or_connect_db()
+        self.last_post_id = 0
     
     def create_or_connect_db(self, erase_first=False):
         if(erase_first):
-            self.erase_data_from_db()
+            try:
+                os.remove(('{0}.db').format(self.db_name))
+            except Exception:
+                pass
         
         # Creates and/or connects to SQLite database
         self.conn = sqlite3.connect(('{0}.db').format(self.db_name))
@@ -47,6 +46,7 @@ class SqlAccess():
                      depth          int         NOT NULL,
                      next           varchar,
                      previous       varchar,
+                     text           varchar,
                      FOREIGN KEY (post_id) REFERENCES post (id)
                      )
                      ''')
