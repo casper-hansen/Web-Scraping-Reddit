@@ -276,8 +276,25 @@ class SoupScraper():
         
         self.comment_ids.append(comment_ids)
         
-    def _extract_comment_ids_to_sql_format(self):
-        pass
+    def _extract_comment_ids_to_sql_format(self,
+                                           curr_url,
+                                           comment_ids):
+        #https://www.reddit.com/r/MachineLearning/comments/e202r7/p_i_reimplemented_stylegan_using_tensorflow_20/f8swi1t
+        array_of_comments = []
+        
+        def extract_comment_id(comment_id):
+            if '_' in comment_id:
+                return comment_id.split('_')[1]
+            else:
+                return comment_id
+        
+        for key in comment_ids.keys():
+            comment_id = extract_comment_id(key)
+            comment_url = curr_url + comment_id
+            array_of_comments.append(comment_url)
+            
+        print(array_of_comments)
+            
     
     def _extract_post_links_to_sql_format(self,
                                           links):
@@ -323,10 +340,8 @@ class SoupScraper():
                     ]
             
             # append data to comment_data
-            comment = [None,
-                       None,
-                       self.comment_ids[i]
-                        ]
+            comment = self._extract_comment_ids_to_sql_format(self.urls[i],
+                                                              self.comment_ids[i])
             
             # append data to link_data
             links = self._extract_post_links_to_sql_format(self.post_links[i])
