@@ -66,8 +66,11 @@ class SeleniumScraper():
         xpath = "//a[@data-click-id='body']"
         
         sleep_time = 0.8
-        print(('Opening reddit and scrolling: takes approximately {0} seconds'
-               ).format(sleep_time*scroll_n_times))
+        if(scroll_n_times != 0):
+            print(('Opening reddit and scrolling: takes approximately {0} seconds'
+                   ).format(sleep_time*scroll_n_times))
+        else:
+            print('Opening reddit and scrolling.. done')
         
         try:
             # When scroll_n_times = 0, loop stops

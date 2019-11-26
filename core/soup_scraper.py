@@ -281,6 +281,7 @@ class SoupScraper():
                                            comment_ids):
         #https://www.reddit.com/r/MachineLearning/comments/e202r7/p_i_reimplemented_stylegan_using_tensorflow_20/f8swi1t
         array_of_comments = []
+        array_of_comment_ids = []
         
         def extract_comment_id(comment_id):
             if '_' in comment_id:
@@ -291,10 +292,48 @@ class SoupScraper():
         for key in comment_ids.keys():
             comment_id = extract_comment_id(key)
             comment_url = curr_url + comment_id
+            
             array_of_comments.append(comment_url)
+            array_of_comment_ids.append(comment_id)
             
-        return array_of_comments
+        return array_of_comments, array_of_comment_ids
+    
+    def _scrape_and_generate_comments_for_insertion(self,
+                                                    comment_id_links_array,
+                                                    array_of_comment_ids):
+        # t_1 + comment_id + .text()
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        for i, comment_url in enumerate(comment_id_links_array):
+            author = None
+            text = None
+            score = None
+            comment_id = array_of_comment_ids[i]
             
+            r = requests.get(comment_url, headers=headers)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            div = soup.select('div.Comment.t1_{0}'.format(comment_id))
+            
+            if div is not None:
+                html_and_text = div[0].find('div', attrs={'data-test-id' : 'comment'})
+                author = div[0].find_all('a')[0].get_text()
+                text = html_and_text.get_text()
+                spans = div[0].find_all("span")
+                score = [spans[i].get_text() for i in range(len(spans)) if 'point' in spans[i].get_text()][0]
+                
+                if len(score) == 0:
+                    score = None
+            '''
+            array_of_comment_data = [None,
+                                     None,
+                                     comment_id,
+                                     score,
+                                     depth,
+                                     next_comment,
+                                     previous_comment,
+                                     author,
+                                     text]
+            '''
+        pass
     
     def _extract_post_links_to_sql_format(self,
                                           links):
@@ -340,10 +379,13 @@ class SoupScraper():
                     ]
             
             # append data to comment_data
-            comment_id_links_array = self._extract_comment_ids_to_sql_format(self.urls[i],
+            comment_id_links_array, \
+            array_of_comment_ids    = self._extract_comment_ids_to_sql_format(self.urls[i],
                                                                              self.comment_ids[i])
             
-            comment = None
+            comment = self._scrape_and_generate_comments_for_insertion(comment_id_links_array,
+                                                                       array_of_comment_ids)
+            print(comment_id_links_array)
             # append data to link_data
             links = self._extract_post_links_to_sql_format(self.post_links[i])
             

@@ -37,15 +37,18 @@ class SqlAccess():
                      flairs         int
                      )
                      ''')
-        
+        # score is varchar, because sometimes fourth span is not a score,
+        # could be username, original poster or something else
         c.execute('''CREATE TABLE IF NOT EXISTS comment
                      (
                      id             INTEGER     PRIMARY KEY     AUTOINCREMENT,
                      post_id        int         NOT NULL,
                      comment_id     varchar     NOT NULL,
+                     score          varchar     NOT NULL,
                      depth          int         NOT NULL,
                      next           varchar,
                      previous       varchar,
+                     comment_author varchar,
                      text           varchar,
                      FOREIGN KEY (post_id) REFERENCES post (id)
                      )

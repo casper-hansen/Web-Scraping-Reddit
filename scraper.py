@@ -51,11 +51,6 @@ for i, current_data in enumerate(BSS.data):
     BSS.get_main_link()
     BSS.get_text()
     BSS.get_comment_ids()
-    
-time.sleep(1)
-end = time.time()
-print(('It took {0} seconds to scrape {1} links').format(round(end - start, 1),
-                                                         len(links)))
 
 BSS.prepare_data_for_sql()
 
@@ -70,3 +65,7 @@ except Exception as ex:
     print(ex)
 finally:
     SQL.save_changes()
+
+end = time.time()
+print(('It took {0} seconds to scrape and store {1} links').format(round(end - start, 1),
+                                                                   len(links)))
