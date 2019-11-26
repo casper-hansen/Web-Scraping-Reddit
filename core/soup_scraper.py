@@ -33,7 +33,7 @@ class SoupScraper():
         self.texts = []
         self.main_links = []
         self.flairs = []
-        self.comment_ids = []
+        self.comment_ids_arr_of_dicts = []
         self.post_links = []
         
         # One array per post, with comment and link in same index
@@ -270,15 +270,15 @@ class SoupScraper():
             https://www.reddit.com/r/MachineLearning/comments/dtfx9m/rtheoretical_research_paper_in_gans/f6wbrvh
         '''
         
-        comment_ids = self.single_post_data['commentsPage']\
+        comment_ids_dict = self.single_post_data['commentsPage']\
                                            ['keyToCommentThreadLinkSets']\
                                            ["commentsPage--[post:'t3_" + self.url_ids[self.index] + "']"]
         
-        self.comment_ids.append(comment_ids)
+        self.comment_ids_arr_of_dicts.append(comment_ids_dict)
         
     def _extract_comment_ids_to_sql_format(self,
                                            curr_url,
-                                           comment_ids):
+                                           comment_ids_arr_of_dicts):
         #https://www.reddit.com/r/MachineLearning/comments/e202r7/p_i_reimplemented_stylegan_using_tensorflow_20/f8swi1t
         array_of_comments = []
         array_of_comment_ids = []
@@ -289,7 +289,7 @@ class SoupScraper():
             else:
                 return comment_id
         
-        for key in comment_ids.keys():
+        for key in comment_ids_arr_of_dicts.keys():
             comment_id = extract_comment_id(key)
             comment_url = curr_url + comment_id
             
@@ -381,7 +381,7 @@ class SoupScraper():
             # append data to comment_data
             comment_id_links_array, \
             array_of_comment_ids    = self._extract_comment_ids_to_sql_format(self.urls[i],
-                                                                             self.comment_ids[i])
+                                                                             self.comment_ids_arr_of_dicts[i])
             
             comment = self._scrape_and_generate_comments_for_insertion(comment_id_links_array,
                                                                        array_of_comment_ids)
