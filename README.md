@@ -22,6 +22,7 @@ Pull requests are welcome.
 - [ ] Make app robust
 - [ ] Download driver automatically
 - [ ] Add more browsers for running this project (Firefox first)
+- [ ] Give categories and flairs their own table, right now they are just concatenated into a string.
 
 # Install
 
