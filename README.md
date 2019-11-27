@@ -3,7 +3,24 @@ Web scraping /r/MachineLearning with BeautifulSoup and Selenium, without using t
 
 If you found this repository useful, consider giving it a star, such that you easily can find it again.
 
-## Install
+# Features
+
+- [x] App can scrape most of the available data, as can be seen from the database diagram.
+- [x] Choose subreddit and filter
+- [x] Control approximately how many posts to collect
+- [x] Headless browser. Run this app in the background and do other work in the mean time.
+
+## Future improvements
+
+This app is not robust (enough). There are extremely many edge cases in web scraping, and this would be something to improve upon in the future.
+
+Pull requests are welcome.
+
+- [ ] Make app robust
+- [ ] Download driver automatically
+- [ ] Add more browsers for running this project (Firefox first)
+
+# Install
 
 To run this project, you need to have the following (besides [Python 3+](https://www.python.org/downloads/)):
 
@@ -12,16 +29,16 @@ To run this project, you need to have the following (besides [Python 3+](https:/
 3. Place the chromerdriver in the *core* folder of this project.
 3. Install the packages specified below with pip or conda.
 
-### Install the needed packages with pip:
+**Note**: If your Chrome browser automatically updates to a new version, the chromedriver that you downloaded will almost surely not work, after an automatic update.
+
+## Install the needed packages with pip:
 
 ```
 pip install beautifulsoup4 selenium
 ```
 
-### Install the needed packages with conda:
+## Install the needed packages with conda:
 
 ```
 conda install -c anaconda -y beautifulsoup4 selenium
 ```
-
-**Note**: If your Chrome browser automatically updates to a new version, the chromedriver that you downloaded will almost surely not work, after an automatic update.

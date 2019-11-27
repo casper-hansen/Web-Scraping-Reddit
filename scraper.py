@@ -8,7 +8,9 @@ reddit_home = 'https://www.reddit.com'
 slash = '/r/'
 subreddit = 'MachineLearning'
 sort_by = '/hot/'
-scroll_n_times = 0
+scroll_n_times = 10
+scrape_comments = True
+erase_db_first = False
 
 start = time.time()
 
@@ -52,20 +54,25 @@ for i, current_data in enumerate(BSS.data):
     BSS.get_text()
     BSS.get_comment_ids()
 
-BSS.prepare_data_for_sql()
+time.sleep(1)
+BSS.prepare_data_for_sql(scrape_comments=scrape_comments)
 
 try:
-    SQL.create_or_connect_db(erase_first=True)
+    SQL.create_or_connect_db(erase_first=erase_db_first)
     # [0] = post, [1] = comment, [2] = link
     for i in range(len(BSS.post_data)):
         SQL.insert('post', data = BSS.post_data[i])
-        #SQL.insert('comment', data = BSS.comment_data[i])
         SQL.insert('link', data = BSS.link_data[i])
+        
+        if scrape_comments:
+            SQL.insert('comment', data = BSS.comment_data[i])
 except Exception as ex:
     print(ex)
 finally:
     SQL.save_changes()
 
+time.sleep(1)
 end = time.time()
-print(('It took {0} seconds to scrape and store {1} links').format(round(end - start, 1),
-                                                                   len(links)))
+
+print(('\nIt took {0} seconds to scrape and store {1} links').format(round(end - start, 1),
+                                                                     len(links)))
