@@ -2,6 +2,7 @@ import time
 import json
 import os
 from selenium import webdriver
+from core.progress_bar import ProgressBar
 
 class SeleniumScraper():
     def __init__(self):
@@ -104,7 +105,12 @@ class SeleniumScraper():
         
         pure_dicts = []
         
-        for data in script_data:            
+        print('Making Python dicts out of script data')
+        
+        progress = ProgressBar(len(script_data))
+        for data in script_data:
+            progress.update()
+            
             first_index = data.index('{')
             last_index = data.rfind('}') + 1
             
