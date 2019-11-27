@@ -10,12 +10,15 @@ If you found this repository useful, consider giving it a star, such that you ea
 - [x] Control approximately how many posts to collect
 - [x] Headless browser. Run this app in the background and do other work in the mean time.
 
+![Database Diagram](https://mlfromscratch.com/content/images/2019/11/image-6.png)
+
 ## Future improvements
 
 This app is not robust (enough). There are extremely many edge cases in web scraping, and this would be something to improve upon in the future.
 
 Pull requests are welcome.
 
+- [ ] Get rid of as many varchars in comment table as possible; use int for higher quality data.
 - [ ] Make app robust
 - [ ] Download driver automatically
 - [ ] Add more browsers for running this project (Firefox first)
