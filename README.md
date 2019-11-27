@@ -31,7 +31,9 @@ To run this project, you need to have the following (besides [Python 3+](https:/
 1. [Chrome browser](https://www.google.com/chrome/) installed on your computer.
 2. Paste this into your address bar in Chrome chrome://settings/help. Download the corresponding [chromedriver version here](https://chromedriver.chromium.org/downloads).
 3. Place the chromerdriver in the *core* folder of this project.
-3. Install the packages specified below with pip or conda.
+4. Install the packages specified below with pip or conda.
+
+After these steps, you can run **scraper.py to scrape and store the reddit data** in an sqlite database. It's recommended to download [DB Browser For SQLite](https://sqlitebrowser.org/) to browse the database. If you want to **pull out the data, you should use make_dataset.py**. For a last demonstration, we can **run a Machine Learning project using mlproj.py**.
 
 **Note**: If your Chrome browser automatically updates to a new version, the chromedriver that you downloaded will almost surely not work, after an automatic update.
 
