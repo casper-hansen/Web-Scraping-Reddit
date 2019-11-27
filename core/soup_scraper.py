@@ -11,7 +11,7 @@ class SoupScraper():
                  subreddit):
         self.reddit_home = reddit_home
         self.slash = slash
-        self.subreddit = subreddit
+        self.subreddit = subreddit.lower()
         
         self.single_post_data = {}
         self.index = 0
@@ -155,9 +155,9 @@ class SoupScraper():
                                       ['flair']
         
         flair_arr = []
-        
-        for flair in flairs:
-            flair_arr.append(flair['text'])
+        if flairs is not None:
+            for flair in flairs:
+                flair_arr.append(flair['text'])
         
         self.flairs.append(flair_arr)
     
@@ -195,9 +195,9 @@ class SoupScraper():
                                           ['postCategories']
         
         cat_arr = []
-        
-        for cat in categories:
-            cat_arr.append(cat['categoryName'])
+        if categories is not None:
+            for cat in categories:
+                cat_arr.append(cat['categoryName'])
         
         self.categories.append(cat_arr)
     

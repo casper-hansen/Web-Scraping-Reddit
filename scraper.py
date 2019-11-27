@@ -6,11 +6,11 @@ import time
 
 reddit_home = 'https://www.reddit.com'
 slash = '/r/'
-subreddit = 'MachineLearning'
+subreddit = 'DataScience'
 sort_by = '/hot/'
-scroll_n_times = 10
+scroll_n_times = 1000
 scrape_comments = True
-erase_db_first = False
+erase_db_first = True
 
 start = time.time()
 

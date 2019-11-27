@@ -24,6 +24,7 @@ class SeleniumScraper():
         options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications" : 2}
         options.add_experimental_option("prefs", prefs)
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
         options.add_argument("--headless")
         
         path = os.path.dirname(os.path.abspath(__file__))
@@ -58,14 +59,14 @@ class SeleniumScraper():
             raise ValueError('scroll_n_times must be greater' +
                              'than or equal to 0')
         
-        self.page = page
+        self.page = page.lower()
         self.driver.get(page)
         
         # Selects all the a elements that have a "data-click-id" attribute with a value of "body"
         # https://stackoverflow.com/questions/36019544/if-double-slash-is-used-2-times-in-xpath-what-does-it-mean
         xpath = "//a[@data-click-id='body']"
         
-        sleep_time = 0.8
+        sleep_time = 0.5
         if(scroll_n_times != 0):
             print(('Opening reddit and scrolling: takes approximately {0} seconds'
                    ).format(sleep_time*scroll_n_times))
