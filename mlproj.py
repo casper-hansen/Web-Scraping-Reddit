@@ -48,8 +48,8 @@ def score_to_percentile(df):
     return df
 
 def df_split(df):
-    y = df.score
-    X = df.drop(['score'], axis=1)
+    y = df[['score_bad', 'score_average', 'score_good', 'score_exceptional']]
+    X = df.drop(['score_bad', 'score_average', 'score_good', 'score_exceptional'], axis=1)
     
     X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.33, random_state=42)
@@ -59,4 +59,4 @@ def df_split(df):
 df = prepare_data(df)
 df = score_to_percentile(df)
 
-#X_train, X_test, y_train, y_test = df_split(df)
+X_train, X_test, y_train, y_test = df_split(df)
