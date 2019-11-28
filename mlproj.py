@@ -2,7 +2,11 @@ import copy
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
 
+pd.options.mode.chained_assignment = None
 df = pd.read_csv('data/comment_data.csv', usecols=['score', 'text'])
 
 def prepare_data(df):
@@ -43,13 +47,16 @@ def score_to_percentile(df):
         
     df.score = new_score
     
-    df = pd.get_dummies(df, columns=['score'])
+    #df = pd.get_dummies(df, columns=['score'])
     
     return df
 
 def df_split(df):
-    y = df[['score_bad', 'score_average', 'score_good', 'score_exceptional']]
-    X = df.drop(['score_bad', 'score_average', 'score_good', 'score_exceptional'], axis=1)
+    y = df[['score']]
+    X = df.drop(['score'], axis=1)
+    
+    content = [' ' + comment for comment in X.text.values]
+    X = CountVectorizer().fit_transform(content).toarray()
     
     X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.33, random_state=42)
@@ -60,3 +67,10 @@ df = prepare_data(df)
 df = score_to_percentile(df)
 
 X_train, X_test, y_train, y_test = df_split(df)
+
+lr = LogisticRegression(C=0.05, solver='lbfgs', multi_class='multinomial')
+lr.fit(X_train, y_train)
+pred = lr.predict(X_test)
+score = accuracy_score(y_test, pred)
+
+print ("Accuracy: {0}".format(score))
