@@ -25,15 +25,25 @@ def prepare_data(df):
     return df
 
 def score_to_percentile(df):
-    a = df.score.quantile(0.25)
+    second = df.score.quantile(0.50) # Average
+    third = df.score.quantile(0.75) # Good
+    fourth = df.score.quantile(0.95) # exceptional
     
-    b = df.score.quantile(0.50) 
+    new_score = []
     
-    c = df.score.quantile(0.75) 
+    for i, row in enumerate(df.score):
+        if row > fourth:
+            new_score.append('exceptional')
+        elif row > third:
+            new_score.append('good')
+        elif row > second:
+            new_score.append('average')
+        else:
+            new_score.append('bad')
+        
+    df.score = new_score
     
-    d = df.score.quantile(0.9)
-    
-    print(d)
+    df = pd.get_dummies(df, columns=['score'])
     
     return df
 
@@ -48,6 +58,5 @@ def df_split(df):
 
 df = prepare_data(df)
 df = score_to_percentile(df)
-
 
 #X_train, X_test, y_train, y_test = df_split(df)
