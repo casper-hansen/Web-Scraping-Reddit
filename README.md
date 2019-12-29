@@ -10,7 +10,7 @@ If you found this repository useful, consider giving it a star, such that you ea
 - [x] Control approximately how many posts to collect
 - [x] Headless browser. Run this app in the background and do other work in the mean time.
 
-![Database Diagram](https://mlfromscratch.com/content/images/2019/11/image-6.png)
+![Database Diagram](https://mlfromscratch.com/content/images/2019/12/image-6.png)
 
 ## Future improvements
 
